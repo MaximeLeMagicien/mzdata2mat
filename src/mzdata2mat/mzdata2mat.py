@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from mat4py import savemat
 from javascript import require
 from javascript.errors import JavaScriptError
-from errors import mzDataError
+from .errors import mzDataError
 import os
 import shutil
 from typing import Any
@@ -134,6 +134,22 @@ class mzDataManager(BaseModel):
         if remove:
             os.remove(os.path.join(mzData.filePath, mzData.fileName))
         return
+    
+    def convertFile(self, fileName : str, customDirectory : bool = False, dir2Save : str = None, force : bool = False, remove : bool = False):
+        """
+        Reads mzData.xml file and saves it directly into the folder specified.\n
+        -> `fileName` :\n
+            -> Should be the full path to the file and it's extension (.mzdata.xml) to convert if no value was given to `mzDataPath` when initializing the class.\n
+            -> Otherwise, the file's relative path with it's extension (.mzdata.xml)\n
+        -> `customDirectory` : Set this parameter to `True` if the `fileName` is in a different path than the one given in configuration.
+        -> `dir2Save`   : Save directory to save the .mat file. If path was given in configuration, it is not needed. This parameter will be prioritised over the path given in configuration (if any).\n
+        -> `force`      : If a file has the same name in the converted folder, should it be replaced ? (File will not be saved if sibling found in convert folder and this parameter set to `False`.)
+        -> `remove`     : Should the original file be removed when it is saved as .mat file ?\n
+
+        """
+        fileContent = self.mzDataXMLread(fileName=fileName, customDirectory=customDirectory)
+        self.saveMatfile(mzData=fileContent, remove=remove, dir2Save=dir2Save, force=force)
+        return
 
 def verify():
     try:
@@ -146,5 +162,3 @@ def verify():
         print("mzdata2mat - Ready to use !")
     except Exception as e:
         raise e
-
-verify()

@@ -8,8 +8,12 @@ description = "Package used to convert mzData.xml files into matlab files."
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License"
+  "Development Status :: 4 - Beta",
+  "Operating System :: MacOS :: MacOS X",
+  "Operating System :: Microsoft :: Windows :: Windows 11",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License"
 ]
 dependencies = [
   "pydantic>=2.6.4",
@@ -21,6 +25,12 @@ license = {text = "MIT License"}
 
 [project.scripts]
 mzdata2mat-verify = "mzdata2mat:verify"
+
+[project.urls]
+Documentation = "https://mzdata2mat.readthedocs.io/"
+Repository = "https://github.com/MaximeLeMagicien/mzdata2mat.git"
+Issues = "https://github.com/MaximeLeMagicien/mzdata2mat/issues"
+Changelog = "https://github.com/MaximeLeMagicien/mzdata2mat/blob/main/Changelog.md"
 
 [build-system]
 requires = ["hatchling"]
