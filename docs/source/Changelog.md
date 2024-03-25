@@ -15,11 +15,11 @@
 - Added `errors` module which contains the possible exceptions.
 - Reduced package's size
 - __Opened a GitHub__ for the package. If you encounter any bug, open an issue there.
-- __New documentation__ available on mzdata2mat.readthedocs.io. Go check it out !
+- __New documentation__ available on [mzdata2mat.readthedocs.io](https://mzdata2mat.readthedocs.io). Go check it out !
 - Added this changelog to keep track of the new realeases and changes.
 - Various improvements & bug fixes
 
-### Release date :
+### Release date : 03/24/2024
 
 ## Version `0.0.1` to `0.0.22`
 ### Key elements of those releases

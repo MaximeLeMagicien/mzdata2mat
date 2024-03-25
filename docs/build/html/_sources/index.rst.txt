@@ -6,8 +6,21 @@
 Welcome to mzdata2mat's documentation!
 ======================================
 
+mzdata2mat is a python package which converts mzData.xml files into .mat files
+
+Python required : >=3.9
+Node.js required : 20
+
+Comes with Command Line Interface (CLI) to verify the installation process and the ability to convert files.
+
+What you can do from here :
+- Go to the `Quickstart guide <installation.html>`_
+- Check the `API Reference <mzDataManager.html>`_
+- Visit the `GitHub <https://github.com/MaximeLeMagicien/mzdata2mat>`_
+
+
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :hidden:
    :caption: Infos
 
@@ -15,8 +28,21 @@ Welcome to mzdata2mat's documentation!
    Changelog.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :hidden:
    :caption: Quickstart
 
-   quickstart/code-example.md
+   installation.md
+   code-example.md
+   
+
+.. toctree::
+   :maxdepth: 4
+   :hidden:
+   :caption: API Reference
+
+   mzDataManager.md
+   matStructure.md
+   mzData.md
+   mzdata2mat-verify.md
+   mzDataXMLStruct.md

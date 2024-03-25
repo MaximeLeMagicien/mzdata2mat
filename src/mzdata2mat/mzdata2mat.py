@@ -25,11 +25,11 @@ class mzData(BaseModel):
         return {self.fileName.lower().split(".mzdata")[0] : tempDict}
 
 class mzDataManager(BaseModel):
-    path2mzDataXMLFiles : str = None
-    path2exportedMatFiles : str = None
+    mzDataPath : str = None
+    exportPath : str = None
     mzDataPackage : str = None
 
-    def __init__(self, useDirectory : bool, mzDataPath : str = None, exportPath : str = None):
+    def __init__(self, useDirectory : bool = True, mzDataPath : str = None, exportPath : str = None):
         """Main class for converting .mzData.xml files into .mat files for realeases of Matlab r2019b and newer.
         -> `mzDataPath` : Path to the folder containing the .mzdata.xml files \n
         -> `exportPath` : Path to save the converted .mat files \n
@@ -38,11 +38,11 @@ class mzDataManager(BaseModel):
         """
         if useDirectory:
             if os.path.isdir(mzDataPath) and os.path.exists(mzDataPath):
-                self.path2mzDataXMLFiles = mzDataPath
+                self.mzDataPath = mzDataPath
             else:
                 raise mzDataError("The directory entered for .mzdata.xml files is not valid", 3)
             if os.path.isdir(exportPath) and os.path.exists(exportPath):
-                self.path2exportedMatFiles = exportPath
+                self.exportPath = exportPath
             else:
                 raise mzDataError("The directory entered for converted .mat files is not valid")
         super().__init__()
@@ -61,14 +61,14 @@ class mzDataManager(BaseModel):
         -> `customDirectory` : Set this parameter to `True` if the `fileName` is in a different path than the one given in configuration.
         """
         try:
-            if self.path2mzDataXMLFiles == None or customDirectory:
+            if self.mzDataPath == None or customDirectory:
                     if os.path.exists(fileName):
                         result = self.mzDataPackage.parseMZ(open(fileName).read())
                     else:
                         raise mzDataError("The path given for the mzData file is not valid.", 10)
             else:
-                if os.path.exists(os.path.join(self.path2mzDataXMLFiles, fileName)):
-                    result = self.mzDataPackage.parseMZ(open(os.path.join(self.path2mzDataXMLFiles, fileName)).read())
+                if os.path.exists(os.path.join(self.mzDataPath, fileName)):
+                    result = self.mzDataPackage.parseMZ(open(os.path.join(self.mzDataPath, fileName)).read())
                 else:
                     raise mzDataError("The path given for the mzData file is not valid.", 10)
         except JavaScriptError as e:
@@ -94,10 +94,10 @@ class mzDataManager(BaseModel):
         returnStruct.mz = totalMasseDataSet
         returnStruct.intensities = totalIntensityDataSet
         returnStruct.time = dataStruct.times
-        if customDirectory or self.path2mzDataXMLFiles == None:
+        if customDirectory or self.mzDataPath == None:
             file = fileName
         else:
-            file = self.path2mzDataXMLFiles
+            file = self.mzDataPath
         returnStruct.filePath = file
         try:
             returnStruct.fileName = file.rsplit("/", 1)[1]
@@ -115,13 +115,13 @@ class mzDataManager(BaseModel):
         -> `force`      : If a file has the same name in the converted folder, should it be replaced ? (File will not be saved if sibling found in convert folder and this parameter set to `False`.)
         """
         
-        if self.path2exportedMatFiles == None or dir2Save != None:
+        if self.exportPath == None or dir2Save != None:
             if os.path.exists(dir2Save):
                 saveDir = os.path.join(dir2Save, f"{mzData.fileName.lower().split('.mzdata')[0]}.mat")
             else:
                 raise mzDataError("No save directory specified", 4)
         else:
-            saveDir = os.path.join(self.path2exportedMatFiles, f"{mzData.fileName.split('.mzdata')[0]}.mat")
+            saveDir = os.path.join(self.exportPath, f"{mzData.fileName.split('.mzdata')[0]}.mat")
         
         if os.path.exists(saveDir):
             if force:
