@@ -1,8 +1,8 @@
 # Example Code
-This page gives two examples on how to use the package. If you want to see more complex examples, see the `advanced` section.
+This page gives two examples on how to use the package. More examples will be added in the future.
 
 ## In two lines
-You can acheive the conversion with only two lines of code (see the `advanced` section to customize the way the package works) :
+You can acheive the conversion with only two lines of code :
 
 ```python
 from mzdata2mat import mzDataManager

@@ -5,7 +5,7 @@ Internal class, do not use it to store data. Consider using [mzData](mzData.md) 
 
 ## Definition
 ```python
-mzDataXMLStruct(BaseModel):
+class mzDataXMLStruct(BaseModel):
     metadata : dict
     times : list[float]
     series : Any

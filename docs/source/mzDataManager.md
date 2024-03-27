@@ -5,7 +5,7 @@ Main class used for converting mzData files into matlab files.
 
 ## Definition
 ```python
-mzDataManager(BaseModel):
+class mzDataManager(BaseModel):
     mzDataPath : str = None
     exportPath : str = None
     useDirectory : bool = True
@@ -36,7 +36,7 @@ This function reads a `.mzData.xml` file and returns a `mzData` structure which 
 
 #### Definition
 ```python
-mzDataXMLread(self@mzDataManager, fileName : str, customDirectory : bool = False)
+def mzDataXMLread(self@mzDataManager, fileName : str, customDirectory : bool = False)
 ```
 
 #### How to use
@@ -64,7 +64,7 @@ Saves a `mzData` class into a `.mat` file with all metadata included.
 
 #### Definition
 ```python
-saveMatfile(self@mzDataManager, mzData : mzData, remove : bool = False, dir2Save : str = None, force : bool = False)
+def saveMatfile(self@mzDataManager, mzData : mzData, remove : bool = False, dir2Save : str = None, force : bool = False)
 ```
 
 #### How to use
@@ -93,7 +93,7 @@ All in one function. Reads `mzData.xml` file and automatically saves it into the
 
 #### Definition
 ```python
-convertFile(self@mzDataManager, fileName : str, customDirectory : bool = False, dir2Save : str = None, force : bool = False, remove : bool = False)
+def convertFile(self@mzDataManager, fileName : str, customDirectory : bool = False, dir2Save : str = None, force : bool = False, remove : bool = False)
 ```
 
 #### How to use

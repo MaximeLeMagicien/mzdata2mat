@@ -152,12 +152,17 @@ class mzDataManager(BaseModel):
         return
 
 def verify():
+    print("Starting verifying process...")
     try:
         path = os.getcwd()
         testFile = os.path.join(__file__.lower().rsplit("mzdata", 1)[0], "tiny1.mzData.xml")
+        print("Creating class... ")
         testClass = mzDataManager(useDirectory=False)
+        print("Copying file in current directory...")
         shutil.copyfile(testFile, os.path.join(path, "tiny1.mzData.xml"))
+        print("Reading file...")
         value = testClass.mzDataXMLread(os.path.join(path, "tiny1.mzData.xml"))
+        print("Saving file...")
         testClass.saveMatfile(value, dir2Save=path)
         print("mzdata2mat - Ready to use !")
     except Exception as e:

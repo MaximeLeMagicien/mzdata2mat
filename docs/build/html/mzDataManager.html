@@ -46,7 +46,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Infos</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Welcome.html">Welcome</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Quickstart</span></p>
@@ -125,7 +124,7 @@
 </section>
 <section id="definition">
 <h2>Definition<a class="headerlink" href="#definition" title="Link to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mzDataManager</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">mzDataManager</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">mzDataPath</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">exportPath</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">useDirectory</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
@@ -162,7 +161,7 @@
 </section>
 <section id="id2">
 <h4>Definition<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mzDataXMLread</span><span class="p">(</span><span class="bp">self</span><span class="nd">@mzDataManager</span><span class="p">,</span> <span class="n">fileName</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">customDirectory</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mzDataXMLread</span><span class="p">(</span><span class="bp">self</span><span class="nd">@mzDataManager</span><span class="p">,</span> <span class="n">fileName</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">customDirectory</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -204,7 +203,7 @@
 </section>
 <section id="id5">
 <h4>Definition<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">saveMatfile</span><span class="p">(</span><span class="bp">self</span><span class="nd">@mzDataManager</span><span class="p">,</span> <span class="n">mzData</span> <span class="p">:</span> <span class="n">mzData</span><span class="p">,</span> <span class="n">remove</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">dir2Save</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">force</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">saveMatfile</span><span class="p">(</span><span class="bp">self</span><span class="nd">@mzDataManager</span><span class="p">,</span> <span class="n">mzData</span> <span class="p">:</span> <span class="n">mzData</span><span class="p">,</span> <span class="n">remove</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">dir2Save</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">force</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -242,7 +241,7 @@ If function ran correctly, no output, otherwise raises the error.</p>
 </section>
 <section id="id8">
 <h4>Definition<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">convertFile</span><span class="p">(</span><span class="bp">self</span><span class="nd">@mzDataManager</span><span class="p">,</span> <span class="n">fileName</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">customDirectory</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">dir2Save</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">force</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">remove</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">convertFile</span><span class="p">(</span><span class="bp">self</span><span class="nd">@mzDataManager</span><span class="p">,</span> <span class="n">fileName</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">customDirectory</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">dir2Save</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">force</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">remove</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

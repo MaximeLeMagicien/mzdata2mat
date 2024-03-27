@@ -46,7 +46,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Infos</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Welcome.html">Welcome</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Changelog.html">Changelog</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Quickstart</span></p>
@@ -58,7 +57,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="mzDataManager.html">mzDataManager</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matStructure.html">Matlab saving structure</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">mzData</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">mzData</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#presentation">Presentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#definition">Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-use">How to use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="mzdata2mat-verify.html">mzdata2mat-verify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mzDataXMLStruct.html">mzDataXMLStruct</a></li>
 </ul>
@@ -89,6 +95,66 @@
              
   <section id="mzdata">
 <h1>mzData<a class="headerlink" href="#mzdata" title="Link to this heading"></a></h1>
+<section id="presentation">
+<h2>Presentation<a class="headerlink" href="#presentation" title="Link to this heading"></a></h2>
+<p>This is the Base class which holds all the data collected from a given <code class="docutils literal notranslate"><span class="pre">mzdata.xml</span></code> file. This is the data class used when the <code class="docutils literal notranslate"><span class="pre">mzDataManager</span></code> creates a <code class="docutils literal notranslate"><span class="pre">.mat</span></code> file.<br>
+You can create your own instances of this class if your data is not collected from the mzData files.</p>
+</section>
+<section id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">mzData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">fileName</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">filePath</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">metadata</span> <span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">mz</span> <span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[[]]</span>
+    <span class="n">intensities</span> <span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[[]]</span>
+    <span class="n">time</span> <span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</section>
+<section id="how-to-use">
+<h2>How to use<a class="headerlink" href="#how-to-use" title="Link to this heading"></a></h2>
+<p>There are two ways of creating this class, the first one is the following :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Class creation</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">mzData</span><span class="p">()</span>
+
+<span class="c1"># The script below could be called anywhere you want, just be sure to fill all necessary data before calling the saveMatfile function from the mzdataManager class.</span>
+<span class="n">data</span><span class="o">.</span><span class="n">fileName</span> <span class="o">=</span> <span class="s2">&quot;sample.mzdata.xml&quot;</span>
+<span class="n">data</span><span class="o">.</span><span class="n">filePath</span> <span class="o">=</span> <span class="s2">&quot;some/path/&quot;</span>
+<span class="n">data</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;software&#39;</span> <span class="p">:</span> <span class="s1">&#39;someSoftware&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;analyser&#39;</span> <span class="p">:</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detector&#39;</span> <span class="p">:</span> <span class="s1">&#39;someDetector&#39;</span>
+<span class="p">}</span>
+<span class="n">data</span><span class="o">.</span><span class="n">mz</span> <span class="o">=</span> <span class="n">mzList</span>
+<span class="n">data</span><span class="o">.</span><span class="n">intensities</span> <span class="o">=</span> <span class="n">intensitiesList</span>
+<span class="n">data</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">timeList</span>
+</pre></div>
+</div>
+<p>If you have all informations at the same time, you could use the second way of defining the class :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">mzData</span><span class="p">(</span>
+    <span class="n">fileName</span> <span class="o">=</span> <span class="s2">&quot;sample.mzdata.xml&quot;</span><span class="p">,</span>
+    <span class="n">filePath</span> <span class="o">=</span> <span class="s2">&quot;some/path/&quot;</span><span class="p">,</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;software&#39;</span> <span class="p">:</span> <span class="s1">&#39;someSoftware&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;analyser&#39;</span> <span class="p">:</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detector&#39;</span> <span class="p">:</span> <span class="s1">&#39;someDetector&#39;</span>
+    <span class="p">},</span>
+    <span class="n">mz</span> <span class="o">=</span> <span class="n">mzList</span><span class="p">,</span>
+    <span class="n">intensities</span> <span class="o">=</span> <span class="n">intensitiesList</span><span class="p">,</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">timeList</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading"></a></h2>
+<p>There is in fact a function called <code class="docutils literal notranslate"><span class="pre">toDict</span></code>, but it is intended to be used by the manager class. The only thing it does is convert the structure into the format needed by the <code class="docutils literal notranslate"><span class="pre">.mat</span></code> format.</p>
+</section>
 </section>
 
 
