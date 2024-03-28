@@ -1,7 +1,7 @@
 
 # Changelog
 
-## Version `0.1.0`
+## Version `0.1.0` and `0.1.1`
 ### Key elements of this release
 - Removed usage of deprecated packages (PyExecJS)
 - Added new dependant package (JSPyBridge)

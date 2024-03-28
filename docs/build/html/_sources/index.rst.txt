@@ -6,8 +6,14 @@
 Welcome
 =======
 
-Welcome ! ``mzdata2mat`` is a Python package which converts mzData.xml
-files (version 1.05) into mat files which matlab can load and use.
+Welcome ! ``mzdata2mat`` is a Python package from `LARTIC research team <https://lartic.fsaa.ulaval.ca/>`__, which converts mzData.xml files (version 1.05, Agilent Technologies) into mat files readable using matlab.
+
+
+Author : Maxime R.A. Cordella
+
+Team leader : Pr. Christophe B.Y. Cordella
+
+Copyright(c)2024_LARTIC
 
 |Documentation Status| |PyPI| |downloads|
 
@@ -16,7 +22,7 @@ Current version ``0.1.0``
 
 The current version of mzdata2mat is the following : ``0.1.0``
 
-You can see the complete changelog `here <Changelog.md>`__
+You can see the complete changelog `here <Changelog.html>`__
 
 Compatible hardware
 -------------------

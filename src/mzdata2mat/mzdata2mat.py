@@ -13,15 +13,24 @@ class mzDataXMLStruct(BaseModel):
     series : Any
 
 class mzData(BaseModel):
-    fileName : str = None
-    filePath : str = None
-    metadata : dict = None
+    fileName : str = ""
+    filePath : str = ""
+    metadata : dict = {}
     mz : list[list[float]] = [[]]
     intensities : list[list[float]] = [[]]
     time : list[float] = []
 
+    def __init__(self):
+        super().__init__()
+
     def toDict(self):
+        copyright : dict = {
+        'Author' : '(c)LARTIC_2024_Maxime_CORDELLA',
+        'URL' : 'https://lartic.fsaa.ulaval.ca/chimiometrie/routines-de-conversion'
+        }
         tempDict = self.model_dump()
+        tempDict['copyright'] = copyright
+        tempDict['documentation'] = "https://mzdata2mat.readthedocs.io/"
         return {self.fileName.lower().split(".mzdata")[0] : tempDict}
 
 class mzDataManager(BaseModel):
@@ -114,7 +123,6 @@ class mzDataManager(BaseModel):
         -> `dir2Save`   : Save directory to save the .mat file. If path was given in configuration, it is not needed. This parameter will be prioritised over the path given in configuration (if any).\n
         -> `force`      : If a file has the same name in the converted folder, should it be replaced ? (File will not be saved if sibling found in convert folder and this parameter set to `False`.)
         """
-        
         if self.exportPath == None or dir2Save != None:
             if os.path.exists(dir2Save):
                 saveDir = os.path.join(dir2Save, f"{mzData.fileName.lower().split('.mzdata')[0]}.mat")
