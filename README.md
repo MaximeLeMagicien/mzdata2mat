@@ -12,7 +12,7 @@ Copyright(c)2024_LARTIC
 The complete documentation is available [here](https://mzdata2mat.readthedocs.io/). All classes are explained and methods.
 
 ## Changelog
-The current version of mzdata2mat is the following : `0.1.0`
+The current version of mzdata2mat is the following : `0.1.1`
 
 You can see the complete changelog [here](Changelog.md)
 
