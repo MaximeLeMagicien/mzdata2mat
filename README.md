@@ -30,7 +30,7 @@ At this time, `mzdata2mat` have been tested and is supported on `Windows 11`, no
 This package __requires node.js installed__. you can download and install it at [nodejs.org](https://nodejs.org/en). It is available for both macOS and Windows for free.
 
 ### Python version
-This package has been developped with Python `3.12.1` however, other python versions are actively being tested to add other versions as soon as possible.
+This package is compatible to any python version equal or newer than `3.9`.
 
 ### Python packages
 When mzdata2mat will be installed on your system, the following packages will also be installed (if they are not) into your Python enviuronment : 
