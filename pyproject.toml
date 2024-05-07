@@ -1,10 +1,14 @@
 [project]
 name = "mzdata2mat"
-version = "0.1.1"
+version = "0.2.0"
 authors = [
-  { name="CORDELLA Maxime", email="maxime.cordella911@gmail.com" },
+  { name="LARTIC", email="christophe.cordella@fsaa.ulaval.ca"}
 ]
-description = "Package used to convert mzData.xml files into matlab files."
+maintainers = [
+    { name="CORDELLA Maxime", email="maxime.cordella911@gmail.com"},
+    { name="CORDELLA Christophe", email="christophe.cordella@fsaa.ulaval.ca"}
+]
+description = "Package used to convert mzData.xml files version 1.05 into matlab files."
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
@@ -13,12 +17,17 @@ classifiers = [
   "Operating System :: Microsoft :: Windows :: Windows 11",
   "Natural Language :: English",
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "License :: OSI Approved :: MIT License"
 ]
 dependencies = [
   "pydantic>=2.6.4",
   "mat4py>=0.6.0",
-  "javascript>=1!1.1.3"
+  "javascript>=1!1.1.3",
+  "colorama>=0.4.6"
 ]
 keywords = ["mzData", "matlab", "convert", ".mat", ".mzData.xml", ".xml"]
 license = {text = "MIT License"}
@@ -30,7 +39,7 @@ mzdata2mat-verify = "mzdata2mat:verify"
 Documentation = "https://mzdata2mat.readthedocs.io/"
 Repository = "https://github.com/MaximeLeMagicien/mzdata2mat.git"
 Issues = "https://github.com/MaximeLeMagicien/mzdata2mat/issues"
-Changelog = "https://github.com/MaximeLeMagicien/mzdata2mat/blob/main/Changelog.md"
+Changelog = "https://github.com/MaximeLeMagicien/mzdata2mat/blob/main/docs/source/Changelog.md"
 
 [build-system]
 requires = ["hatchling"]

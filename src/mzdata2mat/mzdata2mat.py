@@ -1,50 +1,32 @@
 from pydantic import BaseModel
-from mat4py import savemat
+from mat4py import savemat, loadmat
+from mat4py.loadmat import ParseError
 from javascript import require
 from javascript.errors import JavaScriptError
 from .errors import mzDataError
 import os
 import shutil
-from typing import Any
-
-class mzDataXMLStruct(BaseModel):
-    metadata : dict
-    times : list[float]
-    series : Any
-
-class mzData(BaseModel):
-    fileName : str = ""
-    filePath : str = ""
-    metadata : dict = {}
-    mz : list[list[float]] = [[]]
-    intensities : list[list[float]] = [[]]
-    time : list[float] = []
-
-    def __init__(self):
-        super().__init__()
-
-    def toDict(self):
-        copyright : dict = {
-        'Author' : '(c)LARTIC_2024_Maxime_CORDELLA',
-        'URL' : 'https://lartic.fsaa.ulaval.ca/chimiometrie/routines-de-conversion'
-        }
-        tempDict = self.model_dump()
-        tempDict['copyright'] = copyright
-        tempDict['documentation'] = "https://mzdata2mat.readthedocs.io/"
-        return {self.fileName.lower().split(".mzdata")[0] : tempDict}
+from .classes import matStruct, mzData, mzDataXMLStruct
+from colorama import Fore
 
 class mzDataManager(BaseModel):
-    mzDataPath : str = None
-    exportPath : str = None
-    mzDataPackage : str = None
-
-    def __init__(self, useDirectory : bool = True, mzDataPath : str = None, exportPath : str = None):
-        """Main class for converting .mzData.xml files into .mat files for realeases of Matlab r2019b and newer.
+    """Main class for converting .mzData.xml files into .mat files for realeases of Matlab r2019b and newer.
+        -> `useDirectory` : Set this parameter to `False` to not use directories and specify them when using the functions.
         -> `mzDataPath` : Path to the folder containing the .mzdata.xml files \n
         -> `exportPath` : Path to save the converted .mat files \n
-        -> `useDirectory` : Set this parameter to `False` to not use directories and specify them when using the functions.
-        
+    """
+    mzDataPath : str = None
+    exportPath : str = None
+    __mzDataPackage__ : str = None
+    matStructure : matStruct = matStruct()
+
+    def __init__(self, useDirectory : bool = True, mzDataPath : str = None, exportPath : str = None, matStructure : matStruct = None):
+        """Main class for converting .mzData.xml files into .mat files for realeases of Matlab r2019b and newer.
+            -> `useDirectory` : Set this parameter to `False` to not use directories and specify them when using the functions.
+            -> `mzDataPath` : Path to the folder containing the .mzdata.xml files \n
+            -> `exportPath` : Path to save the converted .mat files \n
         """
+        super().__init__()
         if useDirectory:
             if os.path.isdir(mzDataPath) and os.path.exists(mzDataPath):
                 self.mzDataPath = mzDataPath
@@ -53,10 +35,11 @@ class mzDataManager(BaseModel):
             if os.path.isdir(exportPath) and os.path.exists(exportPath):
                 self.exportPath = exportPath
             else:
-                raise mzDataError("The directory entered for converted .mat files is not valid")
-        super().__init__()
+                raise mzDataError("The directory entered for converted .mat files is not valid", 3)
+        if matStructure != None:
+            self.matStructure = matStructure
         try:
-            self.mzDataPackage = require('mzdata')
+            self.__mzDataPackage__ = require('mzdata')
         except Exception as e:
             # This error will often be related with node.js not being installed on the target machine.
             raise e
@@ -72,12 +55,12 @@ class mzDataManager(BaseModel):
         try:
             if self.mzDataPath == None or customDirectory:
                     if os.path.exists(fileName):
-                        result = self.mzDataPackage.parseMZ(open(fileName).read())
+                        result = self.__mzDataPackage__.parseMZ(open(fileName).read())
                     else:
                         raise mzDataError("The path given for the mzData file is not valid.", 10)
             else:
                 if os.path.exists(os.path.join(self.mzDataPath, fileName)):
-                    result = self.mzDataPackage.parseMZ(open(os.path.join(self.mzDataPath, fileName)).read())
+                    result = self.__mzDataPackage__.parseMZ(open(os.path.join(self.mzDataPath, fileName)).read())
                 else:
                     raise mzDataError("The path given for the mzData file is not valid.", 10)
         except JavaScriptError as e:
@@ -104,18 +87,21 @@ class mzDataManager(BaseModel):
         returnStruct.intensities = totalIntensityDataSet
         returnStruct.time = dataStruct.times
         if customDirectory or self.mzDataPath == None:
-            file = fileName
+            file = fileName.rsplit("/", 1)[0]
         else:
             file = self.mzDataPath
         returnStruct.filePath = file
         try:
-            returnStruct.fileName = file.rsplit("/", 1)[1]
+            returnStruct.fileName = fileName.rsplit("/", 1)[1]
         except IndexError:
-            returnStruct.fileName = file.rsplit("\\", 1)[1]
+            if fileName.find("\\") != -1:
+                returnStruct.fileName = fileName.rsplit("\\", 1)[1]
+            else:
+                returnStruct.fileName = fileName
         returnStruct.metadata = dataStruct.metadata
         return returnStruct
     
-    def saveMatfile(self, mzData : mzData, remove : bool = False, dir2Save : str = None, force : bool = False):
+    def saveMatfile(self, mzData : mzData, remove : bool = False, dir2Save : str = None, force : bool = False, fileName : str = None, partialSave : bool = False):
         """
         Saves a `mzData` structure to a .mat file.\n
         -> `mzData`     : The structure got from `mzMLread` function.\n
@@ -125,20 +111,20 @@ class mzDataManager(BaseModel):
         """
         if self.exportPath == None or dir2Save != None:
             if os.path.exists(dir2Save):
-                saveDir = os.path.join(dir2Save, f"{mzData.fileName.lower().split('.mzdata')[0]}.mat")
+                saveDir = os.path.join(dir2Save, f"{mzData.fileName.lower().split('.mzdata')[0] if fileName == None else fileName.split('.mat')[0]}.mat")
             else:
                 raise mzDataError("No save directory specified", 4)
         else:
-            saveDir = os.path.join(self.exportPath, f"{mzData.fileName.split('.mzdata')[0]}.mat")
+            saveDir = os.path.join(self.exportPath, f"{mzData.fileName.lower().split('.mzdata')[0] if fileName == None else fileName.split('.mat')[0]}.mat")
         
         if os.path.exists(saveDir):
             if force:
                 os.remove(saveDir)
-                savemat(saveDir, mzData.toDict())
+                savemat(saveDir, mzData.toDict(self.matStructure, partialSave=partialSave))
             else:
-                print(f"File {mzData.fileName} skipped because same file exists in export folder and parameter `force` is not set to `True`")
+                print(Fore.BLUE+ f"Info : File {mzData.fileName} skipped because same file exists in export folder and parameter `force` is not set to `True`" + Fore.RESET)
         else:
-            savemat(saveDir, mzData.toDict())
+            savemat(saveDir, mzData.toDict(self.matStructure, partialSave=partialSave))
         if remove:
             os.remove(os.path.join(mzData.filePath, mzData.fileName))
         return
@@ -158,20 +144,63 @@ class mzDataManager(BaseModel):
         fileContent = self.mzDataXMLread(fileName=fileName, customDirectory=customDirectory)
         self.saveMatfile(mzData=fileContent, remove=remove, dir2Save=dir2Save, force=force)
         return
+    
+    def loadMatfile(self, fileName : str, fromOneStruct : bool = True) -> mzData:
+        """
+        Creates a `mzData` structure from a matlab file.\n
+        -> `fileName` : Full path of the matlab file to load the data from.
+        -> `fromOneStruct` : Is the data contained in one variable ? Set this paramteter to `True` if that's the case.
+        """
+        PATH = ""
+        if os.path.isfile(fileName):
+            PATH = fileName
+        
+        elif self.mzDataPath != None:
+            PATH = os.path.join(self.mzDataPath, fileName)
+        
+        else:
+            raise mzDataError("No such file or directory.", 3)
+
+        try:
+            tempClass = mzData()
+            data = loadmat(PATH)
+            dump = self.matStructure.model_dump()
+            if fromOneStruct:
+                name : str = list(data.keys())[0]
+                content = data[name]
+            else:
+                content = data
+            for key in list(dump.keys()):
+                try:
+                    tempClass.__setattr__(key, content[dump[key]])
+                except KeyError:
+                    if key != "oneStruct":
+                        print(Fore.YELLOW + f"Warning : {Fore.BLUE} {dump[key]} {Fore.YELLOW} corresponding to {Fore.BLUE + key} {Fore.YELLOW} field has not been found in mat file : Using default value in created structure."+Fore.RESET)
+            try:
+                list(content.keys()).index('extra')
+                if content['extra'] == '':
+                    tempClass.__extra__ = {}
+                else:
+                    tempClass.__extra__ = content['extra']
+            except ValueError:
+                tempClass.__extra__ = {}
+            return tempClass
+        except ParseError:
+            raise mzDataError("Error while reading, some data have incompatible type.", 11)
 
 def verify():
-    print("Starting verifying process...")
+    print(Fore.BLUE + "Starting verifying process..." + Fore.RESET)
     try:
         path = os.getcwd()
         testFile = os.path.join(__file__.lower().rsplit("mzdata", 1)[0], "tiny1.mzData.xml")
-        print("Creating class... ")
+        print(Fore.BLUE + "Creating class... " + Fore.RESET)
         testClass = mzDataManager(useDirectory=False)
-        print("Copying file in current directory...")
+        print(Fore.BLUE + "Copying file in current directory..." + Fore.RESET)
         shutil.copyfile(testFile, os.path.join(path, "tiny1.mzData.xml"))
-        print("Reading file...")
+        print(Fore.BLUE + "Reading file..." + Fore.RESET)
         value = testClass.mzDataXMLread(os.path.join(path, "tiny1.mzData.xml"))
-        print("Saving file...")
-        testClass.saveMatfile(value, dir2Save=path)
-        print("mzdata2mat - Ready to use !")
+        print(Fore.BLUE + "Saving file..." + Fore.RESET)
+        testClass.saveMatfile(value, dir2Save=path, force=True)
+        print(Fore.BLUE + "mzdata2mat - Ready to use !" + Fore.RESET)
     except Exception as e:
         raise e

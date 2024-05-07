@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mzDataManager &mdash; mzdata2mat 0.1.0 documentation</title>
+  <title>mzDataManager &mdash; mzdata2mat 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -15,14 +15,14 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=01f34227"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Matlab saving structure" href="matStructure.html" />
-    <link rel="prev" title="Example Code" href="code-example.html" /> 
+    <link rel="next" title="matStruct" href="matStruct.html" />
+    <link rel="prev" title="Advanced load and save logic" href="advancedLoadSaveLogic.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,6 +53,10 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code-example.html">Example Code</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="advancedLoadSaveLogic.html">Advanced load and save logic</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">mzDataManager</a><ul>
@@ -71,25 +75,28 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#savematfile">saveMatfile</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id4">Presentation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">Definition</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">How to use</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">Presentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">How to use</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#convertfile">convertFile</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id7">Presentation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id8">Definition</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id9">How to use</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">Presentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">Definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">How to use</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="matStructure.html">Matlab saving structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matStruct.html">matStruct</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mzData.html">mzData</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mzdata2mat-verify.html">mzdata2mat-verify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mzDataXMLStruct.html">mzDataXMLStruct</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">CLI</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mzdata2mat-verify.html">mzdata2mat-verify</a></li>
 </ul>
 
         </div>
@@ -196,19 +203,19 @@
 </section>
 </section>
 <section id="savematfile">
-<h3>saveMatfile<a class="headerlink" href="#savematfile" title="Link to this heading"></a></h3>
-<section id="id4">
-<h4>Presentation<a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
+<span id="id4"></span><h3>saveMatfile<a class="headerlink" href="#savematfile" title="Link to this heading"></a></h3>
+<section id="id5">
+<h4>Presentation<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
 <p>Saves a <code class="docutils literal notranslate"><span class="pre">mzData</span></code> class into a <code class="docutils literal notranslate"><span class="pre">.mat</span></code> file with all metadata included.</p>
 </section>
-<section id="id5">
-<h4>Definition<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
+<section id="id6">
+<h4>Definition<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">saveMatfile</span><span class="p">(</span><span class="bp">self</span><span class="nd">@mzDataManager</span><span class="p">,</span> <span class="n">mzData</span> <span class="p">:</span> <span class="n">mzData</span><span class="p">,</span> <span class="n">remove</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">dir2Save</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">force</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="id6">
-<h4>How to use<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
+<section id="id7">
+<h4>How to use<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Considering that mzDataManager class has been intialized before and stored as manager variable</span>
 
 <span class="c1"># Considering also the variable content which is the result of the function mzDataXMLread presented above</span>
@@ -220,7 +227,7 @@
 </div>
 <p><u>Parameters</u></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">mzData</span></code> : The <code class="docutils literal notranslate"><span class="pre">mzData</span></code> structure to save as a <code class="docutils literal notranslate"><span class="pre">.mat</span></code> file. (See <a class="reference internal" href="matStructure.html"><span class="std std-doc">here</span></a> for the <code class="docutils literal notranslate"><span class="pre">.mat</span></code> file structure)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mzData</span></code> : The <code class="docutils literal notranslate"><span class="pre">mzData</span></code> structure to save as a <code class="docutils literal notranslate"><span class="pre">.mat</span></code> file. (See <a class="reference internal" href="matStruct.html"><span class="std std-doc">here</span></a> for the <code class="docutils literal notranslate"><span class="pre">.mat</span></code> file structure)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">remove</span></code> : Should the original file (so the original <code class="docutils literal notranslate"><span class="pre">.mzData.xml</span></code> file) be removed when save is complete ?</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">force</span></code> : If a <code class="docutils literal notranslate"><span class="pre">.mat</span></code> file already exists with the same name in the export folder, should it be replaced ? If this parameter is set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, save will be aborted if a file is found.</p></li>
 <li><p>If directories were not provided during init process:</p>
@@ -235,18 +242,18 @@ If function ran correctly, no output, otherwise raises the error.</p>
 </section>
 <section id="convertfile">
 <h3>convertFile<a class="headerlink" href="#convertfile" title="Link to this heading"></a></h3>
-<section id="id7">
-<h4>Presentation<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<section id="id8">
+<h4>Presentation<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
 <p>All in one function. Reads <code class="docutils literal notranslate"><span class="pre">mzData.xml</span></code> file and automatically saves it into the export folder. No transition to the <code class="docutils literal notranslate"><span class="pre">mzData</span></code> class.</p>
 </section>
-<section id="id8">
-<h4>Definition<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
+<section id="id9">
+<h4>Definition<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">convertFile</span><span class="p">(</span><span class="bp">self</span><span class="nd">@mzDataManager</span><span class="p">,</span> <span class="n">fileName</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">customDirectory</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">dir2Save</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">force</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">remove</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="id9">
-<h4>How to use<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
+<section id="id10">
+<h4>How to use<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Considering that mzDataManager class has been intialized before and stored as manager variable</span>
 
 <span class="n">manager</span><span class="o">.</span><span class="n">convertFile</span><span class="p">(</span>
@@ -278,8 +285,8 @@ No outputs</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="code-example.html" class="btn btn-neutral float-left" title="Example Code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="matStructure.html" class="btn btn-neutral float-right" title="Matlab saving structure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="advancedLoadSaveLogic.html" class="btn btn-neutral float-left" title="Advanced load and save logic" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="matStruct.html" class="btn btn-neutral float-right" title="matStruct" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -9,7 +9,7 @@
 project = 'mzdata2mat'
 copyright = '2024, CORDELLA Maxime'
 author = 'CORDELLA Maxime'
-release = '0.1.0'
+release = '0.2.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

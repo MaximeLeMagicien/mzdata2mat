@@ -9,12 +9,12 @@ Copyright(c)2024_LARTIC
 [![downloads](https://static.pepy.tech/badge/mzdata2mat/month)](https://pepy.tech/project/mzdata2mat)
 
 ## Documentation
-The complete documentation is available [here](https://mzdata2mat.readthedocs.io/). All classes are explained and methods.
+The complete documentation is available [here](https://mzdata2mat.readthedocs.io/). All classes and methods are explained.
 
 ## Changelog
-The current version of mzdata2mat is the following : `0.1.1`
+The current version of mzdata2mat is the following : `0.2.0`
 
-You can see the complete changelog [here](Changelog.md)
+You can see the complete changelog [here](https://github.com/MaximeLeMagicien/mzdata2mat/blob/main/Changelog.md)
 
 ## Compatible hardware
 At this time, the following OSes have been tested :
@@ -38,6 +38,7 @@ When mzdata2mat will be installed on your system, the following packages will al
     pydantic>=2.6.4
     mat4py>=0.6.0
     javascript>=1!1.1.3
+    colorama>=0.4.6
 ```
 # Installation
 From your terminal run the following command to install mzdata2mat into your environment :

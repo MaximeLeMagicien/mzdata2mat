@@ -58,6 +58,7 @@ content = manager.mzDataXMLread(
 <u>Outputs</u>
 - Outputs a `mzData` class containing the content of the file parsed.
 
+(savematfile)=
 ### saveMatfile
 #### Presentation
 Saves a `mzData` class into a `.mat` file with all metadata included.
@@ -78,7 +79,7 @@ manager.saveMatFile(
 )
 ```
 <u>Parameters</u>
-- `mzData` : The `mzData` structure to save as a `.mat` file. (See [here](matStructure.md) for the `.mat` file structure)
+- `mzData` : The `mzData` structure to save as a `.mat` file. (See [here](matStruct.md) for the `.mat` file structure)
 - `remove` : Should the original file (so the original `.mzData.xml` file) be removed when save is complete ?
 - `force` : If a `.mat` file already exists with the same name in the export folder, should it be replaced ? If this parameter is set to `False`, save will be aborted if a file is found.
 - If directories were not provided during init process:
